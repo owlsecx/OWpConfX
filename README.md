@@ -18,16 +18,20 @@
 
 ## 📌 Overview
 
-Offline WordPress installation configuration hardening auditor
+
+OWpConfX is an offline, read-only WordPress configuration and deployment auditor that parses wp-config.php via a safe tokenizer (never executing PHP) alongside .htaccess and server rules. It checks security keys/salts, database credentials, debug exposure, file-permission posture, dangerous constants and known hardening gaps. Secrets are masked, findings are mapped to CWE and MITRE ATT&CK, and reports export to TXT, Markdown, JSON, CSV or SARIF.
 
 ---
 
 ## ✨ Features
 
-- Safe PHP tokenizer for wp-config.php — define() & $var parsing, never executes PHP; comments/heredoc/getenv aware
-- Debug, admin hardening, keys & salts, database creds & transport, updates / core version, cookie scope checks
-- Webroot, .htaccess, wp-content, uploads, backups & dumps, plugin / theme / mu-plugin inventory, file permissions
-- Score + A+…F grade, CWE + MITRE ATT&CK, TXT/MD/JSON/CSV/ SARIF, --fail-on gate, templates, salt generator, --demo
+
+- Safe wp-config.php tokenizer (no PHP execution) plus .htaccess and server-rule review
+- Security keys/salts checks: missing, default or weak AUTH_KEY/SALT definitions
+- Database credential exposure (masked), table-prefix and DB-host hardening checks
+- Debug/exposure review: WP_DEBUG, DISALLOW_FILE_EDIT, FORCE_SSL_ADMIN, automatic updates
+- File-permission posture and dangerous constants (FS_METHOD, WP_ALLOW_REPAIR) detection
+- Secrets masked, CWE+ATT&CK mapping and TXT/MD/JSON/CSV/SARIF export with --fail-on gating
 
 ---
 
@@ -40,8 +44,13 @@ Offline WordPress installation configuration hardening auditor
 
 ## 🚀 Usage
 
+
 ```bash
-./OWpConfX
+./OWpConfX --scan -f sarif -o wpconf.sarif
+./OWpConfX --config /var/www/html/wp-config.php
+./OWpConfX -r /mnt/image --fail-on high --json
+./OWpConfX --demo
+./OWpConfX --help
 ```
 
 ---
